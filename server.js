@@ -1,22 +1,19 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-//url space is %20
+const express = require('express');
+const app = express();
 
-const url = `https://www.imdb.com/find?&s=tt&ttype=ft&ref_=fn_ft&q=`;
-
-function searchMovies(searchTerm) {
-    return axios.get(`${url}${searchTerm}`)
-    .then( response => {
-        return response.data
+app.get('/', (req, res) => {
+    res.json({
+        message: 'scraping! yay!'
     })
-}
+})
 
-searchMovies('star wars')
-    .then(body => {
-        const $ = cheerio.load(body);
-        $('.findResult').each(function(i, element) {
-            const $element = $(element);
-            console.log($element.text());
-            
-        })
-    })
+
+
+
+
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log('listening on port', PORT);
+})
